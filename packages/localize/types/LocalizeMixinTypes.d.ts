@@ -1,5 +1,5 @@
 import { Constructor } from '@open-wc/dedupe-mixin';
-import { StringToFunctionMap, PromiseOfObject, PromiseOfVoid } from './localizeTypes';
+import { StringToFunctionMap, ObjectPromise, VoidPromise } from './localizeTypes';
 
 declare class LocalizeMixinHost {
   constructor();
@@ -9,12 +9,12 @@ declare class LocalizeMixinHost {
 
   static get waitForLocalizeNamespaces(): boolean;
 
-  public localizeNamespacesLoaded(): PromiseOfObject;
+  public localizeNamespacesLoaded(): ObjectPromise;
 
   /**
    * Hook into LitElement to only render once all translations are loaded
    */
-  public performUpdate(): PromiseOfVoid;
+  public performUpdate(): VoidPromise;
 
   public onLocaleReady(): void;
   public onLocaleChanged(): void;

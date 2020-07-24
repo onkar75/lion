@@ -1,6 +1,6 @@
 /**
  * @typedef {import('../types/localizeTypes').StringToObjectMap} StringToObjectMap
- * @typedef {import('../types/localizeTypes').PromiseOfObject} PromiseOfObject
+ * @typedef {import('../types/localizeTypes').ObjectPromise} ObjectPromise
  */
 
 /**
@@ -52,7 +52,7 @@ function resolveOrReject(result, resolve, reject) {
 /**
  * @param {string} path
  * @param {number} [ms=0]
- * @returns {PromiseOfObject}
+ * @returns {ObjectPromise}
  */
 export async function fakeImport(path, ms = 0) {
   const result = fakeImports[path];

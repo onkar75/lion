@@ -23,10 +23,10 @@ export type ObjectOrVoid = Object | void;
 
 export type FunctionOrNull = Function | null;
 
-export type RegexpOrString = RegExp | string;
+export type RegExpOrString = RegExp | string;
 
 export type NamespaceObject = StringToFunctionMap | string;
 
-export type PromiseOfObject = Promise<Object>;
+export type ObjectPromise = Promise<Object>;
 
-export type PromiseOfVoid = Promise<void>;
+export type VoidPromise = Promise<void>;

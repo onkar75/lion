@@ -4,7 +4,7 @@ import { localize } from './localize.js';
 /**
  * @typedef {import('../types/LocalizeMixinTypes').LocalizeMixin} LocalizeMixin
  * @typedef {import('../types/localizeTypes').StringToFunctionMap} StringToFunctionMap
- * @typedef {import('../types/localizeTypes').PromiseOfVoid} PromiseOfVoid
+ * @typedef {import('../types/localizeTypes').VoidPromise} VoidPromise
  */
 
 /**
@@ -47,7 +47,7 @@ const LocalizeMixinImplementation = superclass =>
 
     /**
      * hook into LitElement to only render once all translations are loaded
-     * @returns {PromiseOfVoid}
+     * @returns {VoidPromise}
      */
     async performUpdate() {
       if (Object.getPrototypeOf(this).constructor.waitForLocalizeNamespaces) {

@@ -5,10 +5,10 @@ import isLocalizeESModule from './isLocalizeESModule.js';
 /**
  * @typedef {import('../types/localizeTypes').StringToObjectMap} StringToObjectMap
  * @typedef {import('../types/localizeTypes').StringToFunctionMap} StringToFunctionMap
- * @typedef {import('../types/localizeTypes').PromiseOfObject} PromiseOfObject
+ * @typedef {import('../types/localizeTypes').ObjectPromise} ObjectPromise
  * @typedef {import('../types/localizeTypes').ObjectOrVoid} ObjectOrVoid
  * @typedef {import('../types/localizeTypes').FunctionOrNull} FunctionOrNull
- * @typedef {import('../types/localizeTypes').RegexpOrString} RegexpOrString
+ * @typedef {import('../types/localizeTypes').RegExpOrString} RegExpOrString
  * @typedef {import('../types/localizeTypes').NamespaceObject} NamespaceObject
  */
 
@@ -26,11 +26,11 @@ export class LocalizeManager extends LionSingleton {
     this._fallbackLocale = fallbackLocale;
     /** @type {Object.<string, StringToObjectMap>} */
     this.__storage = {};
-    /** @type {Map.<RegexpOrString, Function>} */
+    /** @type {Map.<RegExpOrString, Function>} */
     this.__namespacePatternsMap = new Map();
     /** @type {Object.<string, FunctionOrNull>} */
     this.__namespaceLoadersCache = {};
-    /** @type {Object.<string, Object.<string, PromiseOfObject>>} */
+    /** @type {Object.<string, Object.<string, ObjectPromise>>} */
     this.__namespaceLoaderPromisesCache = {};
     this.formatNumberOptions = {
       returnIfNaN: RETURN_IF_NAN,
@@ -147,7 +147,7 @@ export class LocalizeManager extends LionSingleton {
   }
 
   /**
-   * @returns {PromiseOfObject}
+   * @returns {ObjectPromise}
    */
   get loadingComplete() {
     return Promise.all(Object.values(this.__namespaceLoaderPromisesCache[this.locale]));
@@ -178,7 +178,7 @@ export class LocalizeManager extends LionSingleton {
   }
 
   /**
-   * @param {RegexpOrString} pattern
+   * @param {RegExpOrString} pattern
    * @param {Function} loader
    */
   setupNamespaceLoader(pattern, loader) {
@@ -189,7 +189,7 @@ export class LocalizeManager extends LionSingleton {
    * @param {NamespaceObject[]} namespaces
    * @param {Object} [options]
    * @param {string} [options.locale]
-   * @returns {PromiseOfObject}
+   * @returns {ObjectPromise}
    */
   loadNamespaces(namespaces, { locale } = {}) {
     return Promise.all(
@@ -377,7 +377,7 @@ export class LocalizeManager extends LionSingleton {
   /**
    * @param {string} locale
    * @param {string} namespace
-   * @param {PromiseOfObject} promise
+   * @param {ObjectPromise} promise
    */
   _cacheNamespaceLoaderPromise(locale, namespace, promise) {
     if (!this.__namespaceLoaderPromisesCache[locale]) {
@@ -456,7 +456,7 @@ export class LocalizeManager extends LionSingleton {
   /**
    * @param {string} newLocale
    * @param {string} oldLocale
-   * @returns {PromiseOfObject}
+   * @returns {ObjectPromise}
    */
   _loadAllMissing(newLocale, oldLocale) {
     const oldLocaleNamespaces = this.__storage[oldLocale] || {};
@@ -502,13 +502,13 @@ export class LocalizeManager extends LionSingleton {
    * @param {string | undefined} key
    * @param {string} locale
    * @returns {string}
-   * @throws {Error} Namespace is missing in the key. The key format is "namespace:name"
+   * @throws {Error} `key`is missing namespace. The format for `key` is "namespace:name"
    *
    */
   _getMessageForKey(key, locale) {
     if (!key || key.indexOf(':') === -1) {
       throw new Error(
-        `Namespace is missing in the key "${key}". The format for keys is "namespace:name".`,
+        `Namespace is missing in the key "${key}". The format for key is "namespace:name".`,
       );
     }
     const [ns, namesString] = key.split(':');
